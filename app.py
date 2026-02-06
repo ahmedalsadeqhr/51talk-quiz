@@ -301,6 +301,132 @@ st.markdown("""
         border-color: #FFD700;
         color: #FFD700;
     }
+
+    /* Presentation Mode Styles */
+    .present-header {
+        text-align: center;
+        padding: 30px;
+        background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+        border-radius: 20px;
+        margin-bottom: 30px;
+        border: 3px solid #FFD700;
+    }
+    .present-header h1 {
+        color: #FFD700;
+        font-size: 3em;
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .present-header p {
+        color: #aaa;
+        font-size: 1.5em;
+        margin: 10px 0 0 0;
+    }
+    .present-question {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 60px;
+        border-radius: 25px;
+        border: 4px solid #FFD700;
+        margin: 30px 0;
+        box-shadow: 0 10px 40px rgba(255,215,0,0.2);
+    }
+    .present-question-ar {
+        font-size: 3.5em;
+        color: white;
+        text-align: center;
+        direction: rtl;
+        margin-bottom: 20px;
+        line-height: 1.4;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .present-question-en {
+        font-size: 2em;
+        color: #aaa;
+        text-align: center;
+    }
+    .present-winner {
+        background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+        padding: 60px;
+        border-radius: 25px;
+        text-align: center;
+        margin: 30px 0;
+        box-shadow: 0 10px 40px rgba(255,215,0,0.4);
+        animation: winner-pulse 2s ease-in-out infinite;
+    }
+    @keyframes winner-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+    }
+    .present-winner h1 {
+        color: #1a1a2e;
+        font-size: 4em;
+        margin: 0;
+    }
+    .present-winner h2 {
+        color: #333;
+        font-size: 5em;
+        margin: 20px 0;
+    }
+    .present-winner p {
+        color: #555;
+        font-size: 2em;
+        margin: 0;
+    }
+    .present-stats {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin: 30px 0;
+    }
+    .present-stat {
+        background: rgba(255,255,255,0.1);
+        padding: 30px 50px;
+        border-radius: 15px;
+        text-align: center;
+    }
+    .present-stat-value {
+        font-size: 4em;
+        font-weight: bold;
+        color: #FFD700;
+    }
+    .present-stat-label {
+        font-size: 1.5em;
+        color: #aaa;
+    }
+    .present-waiting {
+        text-align: center;
+        padding: 100px;
+    }
+    .present-waiting h1 {
+        font-size: 4em;
+        color: #FFD700;
+        margin-bottom: 20px;
+    }
+    .present-waiting p {
+        font-size: 2em;
+        color: #aaa;
+    }
+    .present-qr {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        display: inline-block;
+        margin: 20px;
+    }
+    .present-live {
+        display: inline-block;
+        background: #00ff00;
+        color: #000;
+        padding: 10px 30px;
+        border-radius: 30px;
+        font-size: 1.5em;
+        font-weight: bold;
+        animation: blink 1s ease-in-out infinite;
+    }
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -319,9 +445,104 @@ if "start_time" not in st.session_state:
     st.session_state.start_time = None
 
 # =====================
+# PRESENTATION MODE (Big Screen)
+# =====================
+if mode == "present":
+    # Get active question
+    active = get_active_question()
+
+    if active and active["active"] and active["quiz"] in QUIZZES:
+        quiz_id = active["quiz"]
+        q_idx = active["question"]
+        quiz_data = QUIZZES[quiz_id]
+        question = quiz_data["questions"][q_idx]
+
+        # Header
+        st.markdown(f"""
+        <div class="present-header">
+            <span class="present-live">🔴 LIVE</span>
+            <h1>🎯 {quiz_data['title']}</h1>
+            <p>Question {q_idx + 1} of {len(quiz_data['questions'])}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Question Display
+        st.markdown(f"""
+        <div class="present-question">
+            <div class="present-question-ar">{question['ar']}</div>
+            <div class="present-question-en">{question['en']}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Get responses
+        responses = get_responses(quiz_id, q_idx)
+        correct_responses = [r for r in responses if r["correct"]]
+        wrong_responses = [r for r in responses if not r["correct"]]
+
+        # Winner Display
+        if correct_responses:
+            winner = correct_responses[0]
+            st.markdown(f"""
+            <div class="present-winner">
+                <h1>🏆 WINNER! 🏆</h1>
+                <h2>{winner['name']}</h2>
+                <p>⚡ {winner['time_ms']/1000:.2f} seconds</p>
+            </div>
+            """, unsafe_allow_html=True)
+            st.balloons()
+
+        # Stats
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.markdown(f"""
+            <div class="present-stat">
+                <div class="present-stat-value">{len(responses)}</div>
+                <div class="present-stat-label">Total Responses</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with col2:
+            st.markdown(f"""
+            <div class="present-stat">
+                <div class="present-stat-value" style="color: #00ff00;">{len(correct_responses)}</div>
+                <div class="present-stat-label">✓ Correct</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with col3:
+            st.markdown(f"""
+            <div class="present-stat">
+                <div class="present-stat-value" style="color: #ff6b6b;">{len(wrong_responses)}</div>
+                <div class="present-stat-label">✗ Wrong</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        # Top 5 Leaderboard (if we have correct responses)
+        if len(correct_responses) > 1:
+            st.markdown("### 🏅 Top Correct Answers")
+            for i, r in enumerate(correct_responses[:5]):
+                medal = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣"][i]
+                st.markdown(f"**{medal} {r['name']}** - {r['time_ms']/1000:.2f}s")
+
+    else:
+        # Waiting screen
+        st.markdown("""
+        <div class="present-waiting">
+            <h1>🎯 51Talk MENA Quiz</h1>
+            <p>Annual Gathering 2026</p>
+            <br><br>
+            <h1>⏳</h1>
+            <p>Waiting for the next question...</p>
+            <p style="color: #666;">في انتظار السؤال التالي</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Auto-refresh every 1 second for presentation
+    time.sleep(1)
+    st.rerun()
+
+# =====================
 # ADMIN MODE
 # =====================
-if mode == "admin":
+elif mode == "admin":
     st.markdown("""
     <div class="main-header">
         <h1>🎯 Quiz Admin Dashboard</h1>
@@ -435,7 +656,7 @@ if mode == "admin":
 # =====================
 # PLAYER MODE
 # =====================
-else:
+elif mode == "player" or mode not in ["admin", "present"]:
     # Header
     st.markdown("""
     <div class="main-header">

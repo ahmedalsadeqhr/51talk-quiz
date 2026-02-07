@@ -502,12 +502,12 @@ elif mode == "admin":
             player_url = f"{base_url}?quiz={selected_quiz}&q={selected_q}"
             st.code(player_url, language=None)
 
-            # Auto-refresh
+            # Auto-refresh checkbox (actual refresh happens after both tabs render)
+            # Default OFF to avoid interrupting question editing in the Edit tab
             st.divider()
-            auto_refresh = st.checkbox("🔄 Auto-refresh (2s)", value=True)
-            if auto_refresh:
-                time.sleep(2)
-                st.rerun()
+            auto_refresh = st.checkbox("🔄 Auto-refresh (2s)", value=False, key="admin_auto_refresh")
+            if not auto_refresh:
+                st.caption("Turn on during live quiz. Turn off when editing questions.")
 
         with col2:
             question = quiz_data["questions"][selected_q]
@@ -718,6 +718,11 @@ elif mode == "admin":
                     st.rerun()
                 else:
                     st.error("Please fill in all fields (question text + all 4 options in both languages).")
+
+    # Auto-refresh for Control Panel (runs after both tabs have rendered)
+    if st.session_state.get("admin_auto_refresh", False):
+        time.sleep(2)
+        st.rerun()
 
 # =====================
 # PLAYER MODE

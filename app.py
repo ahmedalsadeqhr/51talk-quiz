@@ -48,119 +48,20 @@ def init_db():
 
 init_db()
 
-# Quiz Data
-QUIZZES = {
-    "ramadan": {
-        "title": "مسابقة رمضان - Ramadan Quiz",
-        "questions": [
-            {
-                "ar": "ما معنى محيبس؟",
-                "en": "What is the meaning of Muhaybes?",
-                "options": [
-                    {"ar": "لعبة رمضانية", "en": "A Ramadan game", "correct": True},
-                    {"ar": "حلوى", "en": "A dessert", "correct": False},
-                    {"ar": "تحية", "en": "A greeting", "correct": False},
-                    {"ar": "صلاة", "en": "A prayer", "correct": False}
-                ]
-            },
-            {
-                "ar": "ما اسم المسحراتي في دولة المغرب؟",
-                "en": "What is the name of the Mesaharati in Morocco?",
-                "options": [
-                    {"ar": "النفار", "en": "Al-Naffar", "correct": True},
-                    {"ar": "المسحراتي", "en": "Al-Mesaharati", "correct": False},
-                    {"ar": "الطبال", "en": "Al-Tabbal", "correct": False},
-                    {"ar": "المنادي", "en": "Al-Munadi", "correct": False}
-                ]
-            },
-            {
-                "ar": "ما هو اكثر تقليد رمضاني مشهور في مصر؟",
-                "en": "What is the most famous Ramadan tradition in Egypt?",
-                "options": [
-                    {"ar": "فانوس رمضان", "en": "Ramadan Lantern", "correct": True},
-                    {"ar": "مدفع رمضان", "en": "Ramadan Cannon", "correct": False},
-                    {"ar": "خيمة رمضان", "en": "Ramadan Tent", "correct": False},
-                    {"ar": "موائد الرحمن", "en": "Charity Tables", "correct": False}
-                ]
-            },
-            {
-                "ar": "ما اسم احتفال رمضان بالكويت؟",
-                "en": "What is the name of Ramadan celebration in Kuwait?",
-                "options": [
-                    {"ar": "القرقيعان", "en": "Gergean", "correct": True},
-                    {"ar": "الناصفة", "en": "Al-Nasfa", "correct": False},
-                    {"ar": "الحية بية", "en": "Haya Baya", "correct": False},
-                    {"ar": "القرنقعوه", "en": "Garan'oh", "correct": False}
-                ]
-            },
-            {
-                "ar": "كم عدد أيام شهر رمضان؟",
-                "en": "How many days is Ramadan?",
-                "options": [
-                    {"ar": "29 أو 30 يوم", "en": "29 or 30 days", "correct": True},
-                    {"ar": "28 يوم", "en": "28 days", "correct": False},
-                    {"ar": "31 يوم", "en": "31 days", "correct": False},
-                    {"ar": "27 يوم", "en": "27 days", "correct": False}
-                ]
-            }
-        ]
-    },
-    "chinese": {
-        "title": "مسابقة السنة الصينية - Chinese New Year Quiz",
-        "questions": [
-            {
-                "ar": "متى يحدث عيد الربيع؟",
-                "en": "When does the Spring Festival happen?",
-                "options": [
-                    {"ar": "أول يوم في السنة القمرية", "en": "First day of Lunar New Year", "correct": True},
-                    {"ar": "1 يناير", "en": "January 1st", "correct": False},
-                    {"ar": "في فصل الربيع", "en": "In Spring season", "correct": False},
-                    {"ar": "15 فبراير", "en": "February 15th", "correct": False}
-                ]
-            },
-            {
-                "ar": "ما اسم الوحش الذي كان يهاجم القرى؟",
-                "en": "What's the name of the monster?",
-                "options": [
-                    {"ar": "نيان", "en": "Nian", "correct": True},
-                    {"ar": "تنين", "en": "Dragon", "correct": False},
-                    {"ar": "فينيكس", "en": "Phoenix", "correct": False},
-                    {"ar": "شي", "en": "Xi", "correct": False}
-                ]
-            },
-            {
-                "ar": "لماذا كان القرويون يستخدمون الألعاب النارية؟",
-                "en": "Why were the villagers using fireworks?",
-                "options": [
-                    {"ar": "لإخافة الوحش", "en": "To scare away the monster", "correct": True},
-                    {"ar": "للاحتفال", "en": "For celebration", "correct": False},
-                    {"ar": "للإضاءة", "en": "For lighting", "correct": False},
-                    {"ar": "للتواصل", "en": "For communication", "correct": False}
-                ]
-            },
-            {
-                "ar": "ما اللون الذي يرمز للحظ في الثقافة الصينية؟",
-                "en": "What color symbolizes luck in Chinese culture?",
-                "options": [
-                    {"ar": "الأحمر", "en": "Red", "correct": True},
-                    {"ar": "الأصفر", "en": "Yellow", "correct": False},
-                    {"ar": "الأخضر", "en": "Green", "correct": False},
-                    {"ar": "الأزرق", "en": "Blue", "correct": False}
-                ]
-            },
-            {
-                "ar": "ما هو الطعام التقليدي في عيد الربيع؟",
-                "en": "What is the traditional food during Spring Festival?",
-                "options": [
-                    {"ar": "الزلابية (دامبلينغ)", "en": "Dumplings", "correct": True},
-                    {"ar": "الأرز", "en": "Rice", "correct": False},
-                    {"ar": "النودلز", "en": "Noodles", "correct": False},
-                    {"ar": "السوشي", "en": "Sushi", "correct": False}
-                ]
-            }
-        ]
-    }
-}
+# Quiz Data - Load from JSON file
+QUIZZES_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "quizzes.json")
+
+def load_quizzes():
+    if os.path.exists(QUIZZES_FILE):
+        with open(QUIZZES_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+def save_quizzes(data):
+    with open(QUIZZES_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+
+QUIZZES = load_quizzes()
 
 # Database functions
 def get_active_question():
@@ -550,108 +451,273 @@ elif mode == "admin":
     </div>
     """, unsafe_allow_html=True)
 
-    col1, col2 = st.columns([1, 3])
+    admin_tab1, admin_tab2 = st.tabs(["📡 Control Panel", "✏️ Edit Questions"])
 
-    with col1:
-        st.subheader("📋 Quiz Selection")
-        selected_quiz = st.selectbox(
-            "Choose Quiz",
-            options=list(QUIZZES.keys()),
-            format_func=lambda x: QUIZZES[x]["title"]
-        )
+    # ---- CONTROL PANEL TAB ----
+    with admin_tab1:
+        col1, col2 = st.columns([1, 3])
 
-        quiz_data = QUIZZES[selected_quiz]
-        selected_q = st.selectbox(
-            "Choose Question",
-            options=list(range(len(quiz_data["questions"]))),
-            format_func=lambda x: f"Question {x+1}: {quiz_data['questions'][x]['en'][:30]}..."
-        )
+        with col1:
+            st.subheader("📋 Quiz Selection")
+            selected_quiz = st.selectbox(
+                "Choose Quiz",
+                options=list(QUIZZES.keys()),
+                format_func=lambda x: QUIZZES[x]["title"]
+            )
 
-        st.divider()
+            quiz_data = QUIZZES[selected_quiz]
+            selected_q = st.selectbox(
+                "Choose Question",
+                options=list(range(len(quiz_data["questions"]))),
+                format_func=lambda x: f"Question {x+1}: {quiz_data['questions'][x]['en'][:30]}..."
+            )
 
-        # Broadcast controls
-        st.subheader("📡 Broadcast")
+            st.divider()
 
-        active = get_active_question()
-        is_active = active and active["active"] and active["quiz"] == selected_quiz and active["question"] == selected_q
+            # Broadcast controls
+            st.subheader("📡 Broadcast")
 
-        if is_active:
-            st.success("🟢 LIVE - Question is active!")
-            if st.button("⏹ STOP Question", type="secondary"):
-                set_active_question("", 0, False)
+            active = get_active_question()
+            is_active = active and active["active"] and active["quiz"] == selected_quiz and active["question"] == selected_q
+
+            if is_active:
+                st.success("🟢 LIVE - Question is active!")
+                if st.button("⏹ STOP Question", type="secondary"):
+                    set_active_question("", 0, False)
+                    st.rerun()
+            else:
+                if st.button("🚀 START Question", type="primary"):
+                    set_active_question(selected_quiz, selected_q, True)
+                    st.rerun()
+
+            if st.button("🗑 Clear Responses"):
+                clear_responses(selected_quiz, selected_q)
                 st.rerun()
-        else:
-            if st.button("🚀 START Question", type="primary"):
-                set_active_question(selected_quiz, selected_q, True)
+
+            st.divider()
+
+            # QR Code / Link
+            st.subheader("📱 Player Link")
+            base_url = st.text_input("Your Streamlit URL", value="https://your-app.streamlit.app")
+            player_url = f"{base_url}?quiz={selected_quiz}&q={selected_q}"
+            st.code(player_url, language=None)
+
+            # Auto-refresh
+            st.divider()
+            auto_refresh = st.checkbox("🔄 Auto-refresh (2s)", value=True)
+            if auto_refresh:
+                time.sleep(2)
                 st.rerun()
 
-        if st.button("🗑 Clear Responses"):
-            clear_responses(selected_quiz, selected_q)
-            st.rerun()
+        with col2:
+            question = quiz_data["questions"][selected_q]
 
-        st.divider()
-
-        # QR Code / Link
-        st.subheader("📱 Player Link")
-        base_url = st.text_input("Your Streamlit URL", value="https://your-app.streamlit.app")
-        player_url = f"{base_url}?quiz={selected_quiz}&q={selected_q}"
-        st.code(player_url, language=None)
-
-        # Auto-refresh
-        st.divider()
-        auto_refresh = st.checkbox("🔄 Auto-refresh (2s)", value=True)
-        if auto_refresh:
-            time.sleep(2)
-            st.rerun()
-
-    with col2:
-        question = quiz_data["questions"][selected_q]
-
-        # Current Question Display
-        st.markdown(f"""
-        <div class="question-box">
-            <div class="question-text-ar">{question['ar']}</div>
-            <div class="question-text-en">{question['en']}</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        # Correct Answer
-        correct_opt = next(o for o in question["options"] if o["correct"])
-        st.success(f"✓ Correct Answer: {correct_opt['ar']} - {correct_opt['en']}")
-
-        # Get responses
-        responses = get_responses(selected_quiz, selected_q)
-        correct_responses = [r for r in responses if r["correct"]]
-        wrong_responses = [r for r in responses if not r["correct"]]
-
-        # Winner Display
-        if correct_responses:
-            winner = correct_responses[0]
+            # Current Question Display
             st.markdown(f"""
-            <div class="winner-box">
-                <h2>🏆 WINNER</h2>
-                <p>{winner['name']} ({winner['time_ms']/1000:.2f}s)</p>
+            <div class="question-box">
+                <div class="question-text-ar">{question['ar']}</div>
+                <div class="question-text-en">{question['en']}</div>
             </div>
             """, unsafe_allow_html=True)
 
-        # Stats
-        col_a, col_b, col_c = st.columns(3)
-        with col_a:
-            st.metric("Total Responses", len(responses))
-        with col_b:
-            st.metric("✓ Correct", len(correct_responses))
-        with col_c:
-            st.metric("✗ Wrong", len(wrong_responses))
+            # Correct Answer
+            correct_opt = next(o for o in question["options"] if o["correct"])
+            st.success(f"✓ Correct Answer: {correct_opt['ar']} - {correct_opt['en']}")
 
-        # Responses Table
-        st.subheader("📊 Live Responses")
-        if responses:
-            for i, r in enumerate(responses):
-                icon = "🏆" if i == 0 and r["correct"] else ("✓" if r["correct"] else "✗")
-                color = "green" if r["correct"] else "red"
-                st.markdown(f"**{i+1}. {icon} {r['name']}** - :{color}[{'Correct' if r['correct'] else 'Wrong'}] - {r['time_ms']/1000:.2f}s")
+            # Get responses
+            responses = get_responses(selected_quiz, selected_q)
+            correct_responses = [r for r in responses if r["correct"]]
+            wrong_responses = [r for r in responses if not r["correct"]]
+
+            # Winner Display
+            if correct_responses:
+                winner = correct_responses[0]
+                st.markdown(f"""
+                <div class="winner-box">
+                    <h2>🏆 WINNER</h2>
+                    <p>{winner['name']} ({winner['time_ms']/1000:.2f}s)</p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # Stats
+            col_a, col_b, col_c = st.columns(3)
+            with col_a:
+                st.metric("Total Responses", len(responses))
+            with col_b:
+                st.metric("✓ Correct", len(correct_responses))
+            with col_c:
+                st.metric("✗ Wrong", len(wrong_responses))
+
+            # Responses Table
+            st.subheader("📊 Live Responses")
+            if responses:
+                for i, r in enumerate(responses):
+                    icon = "🏆" if i == 0 and r["correct"] else ("✓" if r["correct"] else "✗")
+                    color = "green" if r["correct"] else "red"
+                    st.markdown(f"**{i+1}. {icon} {r['name']}** - :{color}[{'Correct' if r['correct'] else 'Wrong'}] - {r['time_ms']/1000:.2f}s")
+            else:
+                st.info("No responses yet. Click START to begin!")
+
+    # ---- EDIT QUESTIONS TAB ----
+    with admin_tab2:
+        # Reload quizzes fresh for editing
+        edit_quizzes = load_quizzes()
+
+        st.subheader("📝 Question Editor")
+
+        # --- Add New Quiz ---
+        with st.expander("➕ Add New Quiz"):
+            new_quiz_id = st.text_input("Quiz ID (lowercase, no spaces)", placeholder="e.g. general_knowledge", key="new_quiz_id")
+            new_quiz_title = st.text_input("Quiz Title (Arabic - English)", placeholder="e.g. ثقافة عامة - General Knowledge", key="new_quiz_title")
+            if st.button("Create Quiz", key="btn_create_quiz"):
+                qid = new_quiz_id.strip().lower().replace(" ", "_")
+                if qid and new_quiz_title.strip():
+                    if qid in edit_quizzes:
+                        st.error(f"Quiz '{qid}' already exists!")
+                    else:
+                        edit_quizzes[qid] = {"title": new_quiz_title.strip(), "questions": []}
+                        save_quizzes(edit_quizzes)
+                        st.success(f"Quiz '{new_quiz_title.strip()}' created!")
+                        time.sleep(0.5)
+                        st.rerun()
+                else:
+                    st.error("Please fill in both Quiz ID and Title.")
+
+        st.divider()
+
+        # --- Select Quiz to Edit ---
+        if not edit_quizzes:
+            st.warning("No quizzes found. Create one above.")
         else:
-            st.info("No responses yet. Click START to begin!")
+            edit_quiz_id = st.selectbox(
+                "Select Quiz to Edit",
+                options=list(edit_quizzes.keys()),
+                format_func=lambda x: edit_quizzes[x]["title"],
+                key="edit_quiz_select"
+            )
+
+            eq_data = edit_quizzes[edit_quiz_id]
+
+            # Edit quiz title
+            col_title, col_del = st.columns([4, 1])
+            with col_title:
+                updated_title = st.text_input("Quiz Title", value=eq_data["title"], key="edit_quiz_title")
+            with col_del:
+                st.markdown("<br>", unsafe_allow_html=True)
+                if st.button("🗑 Delete Quiz", key="btn_del_quiz", type="secondary"):
+                    del edit_quizzes[edit_quiz_id]
+                    save_quizzes(edit_quizzes)
+                    st.success("Quiz deleted!")
+                    time.sleep(0.5)
+                    st.rerun()
+
+            if updated_title != eq_data["title"]:
+                eq_data["title"] = updated_title
+                save_quizzes(edit_quizzes)
+
+            st.divider()
+
+            # --- Edit Questions ---
+            questions = eq_data["questions"]
+
+            for q_idx, q in enumerate(questions):
+                with st.expander(f"Question {q_idx + 1}: {q['en'][:50]}{'...' if len(q['en']) > 50 else ''}", expanded=False):
+                    # Question text
+                    q_ar = st.text_input("Question (Arabic)", value=q["ar"], key=f"q_ar_{edit_quiz_id}_{q_idx}")
+                    q_en = st.text_input("Question (English)", value=q["en"], key=f"q_en_{edit_quiz_id}_{q_idx}")
+
+                    # Options
+                    st.markdown("**Answer Options:**")
+                    correct_index = 0
+                    for oi, opt in enumerate(q["options"]):
+                        if opt["correct"]:
+                            correct_index = oi
+                            break
+
+                    option_labels = []
+                    for oi, opt in enumerate(q["options"]):
+                        c1, c2 = st.columns(2)
+                        with c1:
+                            opt_ar = st.text_input(f"Option {oi+1} (Arabic)", value=opt["ar"], key=f"opt_ar_{edit_quiz_id}_{q_idx}_{oi}")
+                        with c2:
+                            opt_en = st.text_input(f"Option {oi+1} (English)", value=opt["en"], key=f"opt_en_{edit_quiz_id}_{q_idx}_{oi}")
+                        option_labels.append(f"{opt_en} / {opt_ar}")
+
+                    # Correct answer selector
+                    new_correct = st.radio(
+                        "Correct Answer",
+                        options=list(range(len(q["options"]))),
+                        index=correct_index,
+                        format_func=lambda x: f"Option {x+1}: {option_labels[x]}",
+                        key=f"correct_{edit_quiz_id}_{q_idx}",
+                        horizontal=True
+                    )
+
+                    col_save, col_delete = st.columns(2)
+                    with col_save:
+                        if st.button(f"💾 Save Question {q_idx + 1}", key=f"btn_save_q_{edit_quiz_id}_{q_idx}", type="primary"):
+                            # Update question text
+                            questions[q_idx]["ar"] = q_ar
+                            questions[q_idx]["en"] = q_en
+                            # Update options
+                            for oi in range(len(questions[q_idx]["options"])):
+                                questions[q_idx]["options"][oi]["ar"] = st.session_state[f"opt_ar_{edit_quiz_id}_{q_idx}_{oi}"]
+                                questions[q_idx]["options"][oi]["en"] = st.session_state[f"opt_en_{edit_quiz_id}_{q_idx}_{oi}"]
+                                questions[q_idx]["options"][oi]["correct"] = (oi == new_correct)
+                            save_quizzes(edit_quizzes)
+                            st.success(f"Question {q_idx + 1} saved!")
+                            time.sleep(0.5)
+                            st.rerun()
+                    with col_delete:
+                        if st.button(f"🗑 Delete Question {q_idx + 1}", key=f"btn_del_q_{edit_quiz_id}_{q_idx}", type="secondary"):
+                            questions.pop(q_idx)
+                            save_quizzes(edit_quizzes)
+                            st.success(f"Question {q_idx + 1} deleted!")
+                            time.sleep(0.5)
+                            st.rerun()
+
+            # --- Add New Question ---
+            st.divider()
+            st.subheader("➕ Add New Question")
+
+            new_q_ar = st.text_input("New Question (Arabic)", key="new_q_ar", placeholder="اكتب السؤال بالعربية")
+            new_q_en = st.text_input("New Question (English)", key="new_q_en", placeholder="Write the question in English")
+
+            st.markdown("**Answer Options:**")
+            new_opts = []
+            for oi in range(4):
+                nc1, nc2 = st.columns(2)
+                with nc1:
+                    nopt_ar = st.text_input(f"New Option {oi+1} (Arabic)", key=f"new_opt_ar_{oi}", placeholder="الخيار بالعربية")
+                with nc2:
+                    nopt_en = st.text_input(f"New Option {oi+1} (English)", key=f"new_opt_en_{oi}", placeholder="Option in English")
+                new_opts.append({"ar": nopt_ar, "en": nopt_en})
+
+            new_correct_opt = st.radio(
+                "Correct Answer for New Question",
+                options=[0, 1, 2, 3],
+                format_func=lambda x: f"Option {x+1}",
+                key="new_correct_opt",
+                horizontal=True
+            )
+
+            if st.button("➕ Add Question", key="btn_add_q", type="primary"):
+                if new_q_ar.strip() and new_q_en.strip() and all(o["ar"].strip() and o["en"].strip() for o in new_opts):
+                    new_question = {
+                        "ar": new_q_ar.strip(),
+                        "en": new_q_en.strip(),
+                        "options": [
+                            {"ar": new_opts[i]["ar"].strip(), "en": new_opts[i]["en"].strip(), "correct": (i == new_correct_opt)}
+                            for i in range(4)
+                        ]
+                    }
+                    questions.append(new_question)
+                    save_quizzes(edit_quizzes)
+                    st.success("Question added!")
+                    time.sleep(0.5)
+                    st.rerun()
+                else:
+                    st.error("Please fill in all fields (question text + all 4 options in both languages).")
 
 # =====================
 # PLAYER MODE

@@ -1,0 +1,112 @@
+{
+    "ramadan": {
+        "title": "مسابقة رمضان - Ramadan Quiz",
+        "questions": [
+            {
+                "ar": "ما معنى محيبس؟",
+                "en": "What is the meaning of Muhaybes?",
+                "options": [
+                    {"ar": "لعبة رمضانية", "en": "A Ramadan game", "correct": true},
+                    {"ar": "حلوى", "en": "A dessert", "correct": false},
+                    {"ar": "تحية", "en": "A greeting", "correct": false},
+                    {"ar": "صلاة", "en": "A prayer", "correct": false}
+                ]
+            },
+            {
+                "ar": "ما اسم المسحراتي في دولة المغرب؟",
+                "en": "What is the name of the Mesaharati in Morocco?",
+                "options": [
+                    {"ar": "النفار", "en": "Al-Naffar", "correct": true},
+                    {"ar": "المسحراتي", "en": "Al-Mesaharati", "correct": false},
+                    {"ar": "الطبال", "en": "Al-Tabbal", "correct": false},
+                    {"ar": "المنادي", "en": "Al-Munadi", "correct": false}
+                ]
+            },
+            {
+                "ar": "ما هو اكثر تقليد رمضاني مشهور في مصر؟",
+                "en": "What is the most famous Ramadan tradition in Egypt?",
+                "options": [
+                    {"ar": "فانوس رمضان", "en": "Ramadan Lantern", "correct": true},
+                    {"ar": "مدفع رمضان", "en": "Ramadan Cannon", "correct": false},
+                    {"ar": "خيمة رمضان", "en": "Ramadan Tent", "correct": false},
+                    {"ar": "موائد الرحمن", "en": "Charity Tables", "correct": false}
+                ]
+            },
+            {
+                "ar": "ما اسم احتفال رمضان بالكويت؟",
+                "en": "What is the name of Ramadan celebration in Kuwait?",
+                "options": [
+                    {"ar": "القرقيعان", "en": "Gergean", "correct": true},
+                    {"ar": "الناصفة", "en": "Al-Nasfa", "correct": false},
+                    {"ar": "الحية بية", "en": "Haya Baya", "correct": false},
+                    {"ar": "القرنقعوه", "en": "Garan'oh", "correct": false}
+                ]
+            },
+            {
+                "ar": "كم عدد أيام شهر رمضان؟",
+                "en": "How many days is Ramadan?",
+                "options": [
+                    {"ar": "29 أو 30 يوم", "en": "29 or 30 days", "correct": true},
+                    {"ar": "28 يوم", "en": "28 days", "correct": false},
+                    {"ar": "31 يوم", "en": "31 days", "correct": false},
+                    {"ar": "27 يوم", "en": "27 days", "correct": false}
+                ]
+            }
+        ]
+    },
+    "chinese": {
+        "title": "مسابقة السنة الصينية - Chinese New Year Quiz",
+        "questions": [
+            {
+                "ar": "متى يحدث عيد الربيع؟",
+                "en": "When does the Spring Festival happen?",
+                "options": [
+                    {"ar": "أول يوم في السنة القمرية", "en": "First day of Lunar New Year", "correct": true},
+                    {"ar": "1 يناير", "en": "January 1st", "correct": false},
+                    {"ar": "في فصل الربيع", "en": "In Spring season", "correct": false},
+                    {"ar": "15 فبراير", "en": "February 15th", "correct": false}
+                ]
+            },
+            {
+                "ar": "ما اسم الوحش الذي كان يهاجم القرى؟",
+                "en": "What's the name of the monster?",
+                "options": [
+                    {"ar": "نيان", "en": "Nian", "correct": true},
+                    {"ar": "تنين", "en": "Dragon", "correct": false},
+                    {"ar": "فينيكس", "en": "Phoenix", "correct": false},
+                    {"ar": "شي", "en": "Xi", "correct": false}
+                ]
+            },
+            {
+                "ar": "لماذا كان القرويون يستخدمون الألعاب النارية؟",
+                "en": "Why were the villagers using fireworks?",
+                "options": [
+                    {"ar": "لإخافة الوحش", "en": "To scare away the monster", "correct": true},
+                    {"ar": "للاحتفال", "en": "For celebration", "correct": false},
+                    {"ar": "للإضاءة", "en": "For lighting", "correct": false},
+                    {"ar": "للتواصل", "en": "For communication", "correct": false}
+                ]
+            },
+            {
+                "ar": "ما اللون الذي يرمز للحظ في الثقافة الصينية؟",
+                "en": "What color symbolizes luck in Chinese culture?",
+                "options": [
+                    {"ar": "الأحمر", "en": "Red", "correct": true},
+                    {"ar": "الأصفر", "en": "Yellow", "correct": false},
+                    {"ar": "الأخضر", "en": "Green", "correct": false},
+                    {"ar": "الأزرق", "en": "Blue", "correct": false}
+                ]
+            },
+            {
+                "ar": "ما هو الطعام التقليدي في عيد الربيع؟",
+                "en": "What is the traditional food during Spring Festival?",
+                "options": [
+                    {"ar": "الزلابية (دامبلينغ)", "en": "Dumplings", "correct": true},
+                    {"ar": "الأرز", "en": "Rice", "correct": false},
+                    {"ar": "النودلز", "en": "Noodles", "correct": false},
+                    {"ar": "السوشي", "en": "Sushi", "correct": false}
+                ]
+            }
+        ]
+    }
+}
